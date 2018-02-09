@@ -11,7 +11,7 @@ else {
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Page a Mini chat</title>
+        <title>Mini chat</title>
     </head>
      <style>
     form
@@ -21,7 +21,7 @@ else {
     </style>
     <body>
        
-    <p> Vieuller sesire ton message :  </p>
+    <p>Veuillez saisir votre message  :</p>
      <p>   <form name="monform" action="minichatpost.php" method="post" >
         <label for="pseudo">Pseudo :</label>
           <input type="Text" name="pseudo1" placeholder= "<?php echo $r; ?>">
@@ -42,16 +42,17 @@ else {
                 }
 
         // requête pour récupurer les données
-                $reponse = $bdd->query('Select * from message_minichat ORDER BY ID DESC LIMIT 0, 10');
+                $reponse = $bdd->query('Select pseudo,message,DAY(date_message) AS jour, MONTH(date_message) AS mois, YEAR(date_message) AS annee, HOUR(date_message) AS heure, MINUTE(date_message) AS minute, SECOND(date_message) AS seconde  from message_minichat ORDER BY ID DESC LIMIT 0, 10');
                while ( $donnees = $reponse->fetch()) {
-                //affichage des message
-                    //   echo $donnees['pseudo'] .' :::::: '.$donnees['message'] . '</br>';
-                echo '<p><strong>' . htmlspecialchars($donnees['pseudo']) . '</strong> : ' . htmlspecialchars($donnees['message']) . '</p>';
+               
+                echo '<p>Le ' . htmlspecialchars($donnees['jour']) . '/' . htmlspecialchars($donnees['mois']) . '/' . htmlspecialchars($donnees['annee']) .' à ['. htmlspecialchars($donnees['heure']) .' H : ' . htmlspecialchars($donnees['minute']) .' min] '.
+                '<strong> '. htmlspecialchars($donnees['pseudo']) .' : </strong>'.htmlspecialchars($donnees['message']) . '</p>'
+                ;
 
                 }
                
 
-        //afficher s il y a des messsages
+        
 
 
 
